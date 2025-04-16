@@ -1,0 +1,1796 @@
+<!DOCTYPE
+html >
+  <html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Center Gym</title>
+    <style>
+        :root {
+            --primary: #32CD32;
+            --secondary: #212121;
+            --light: #f8f9fa;
+            --dark: #1a1a1a;
+            --error: #ff6b6b;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--dark);
+            color: var(--light);
+            transition: all 0.3s ease;
+        }
+        
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+    background-color: #000000;
+    padding: 1rem 0;
+    position: relative;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+        
+        .logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0.5rem 0;
+}
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--light);
+            gap: 10px;
+        }
+        
+        .logo span {
+            color: var(--primary);
+        }
+        
+        .admin-link {
+            color: var(--primary);
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border: 1px solid var(--primary);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .admin-link:hover {
+            background-color: var(--primary);
+            color: var(--secondary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background-image: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 50vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Client Login Section */
+        .client-login {
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .client-login h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #444;
+            border-radius: 4px;
+            font-size: 1rem;
+            background-color: #333;
+            color: var(--light);
+        }
+        
+        .btn {
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: var(--dark);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            background-color: #28a428;
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            background-color: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        /* Info Section */
+        .info-section {
+            margin-bottom: 2rem;
+        }
+        
+        .info-section h2 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .info-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .card {
+            background-color: var(--secondary);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .card h3 {
+            color: var(--primary);
+            margin-bottom: 0.75rem;
+        }
+        
+        .schedule-container {
+            overflow-x: auto;
+        }
+        
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        .schedule-table th, .schedule-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border: 1px solid #444;
+        }
+        
+        .schedule-table th {
+            background-color: var(--primary);
+            color: var(--dark);
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            z-index: 100;
+            overflow: auto;
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            background-color: var(--secondary);
+            margin: 10% auto;
+            padding: 2rem;
+            width: 90%;
+            max-width: 600px;
+            border-radius: 8px;
+            position: relative;
+            animation: modalFadeIn 0.3s ease;
+        }
+        
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+            transition: all 0.3s ease;
+        }
+        
+        .close:hover {
+            transform: rotate(90deg);
+        }
+        
+        /* Admin Panel Styles */
+        .admin-panel {
+            display: block;
+            padding: 2rem;
+            background-color: var(--secondary);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+        
+        .admin-tabs {
+            display: flex;
+            margin-bottom: 1rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .tab-btn {
+            padding: 0.75rem 1.5rem;
+            background-color: transparent;
+            color: var(--light);
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            border-bottom: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+        
+        .tab-btn:hover {
+            color: var(--primary);
+        }
+        
+        .tab-btn.active {
+            border-bottom: 2px solid var(--primary);
+            color: var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1rem 0;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+        
+        table th, table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #444;
+        }
+        
+        table th {
+            background-color: var(--dark);
+            color: var(--primary);
+        }
+        
+        table tr:hover {
+            background-color: rgba(50, 205, 50, 0.1);
+        }
+        
+        .action-btn {
+            padding: 0.25rem 0.5rem;
+            background-color: var(--primary);
+            color: var(--dark);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            margin-right: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .action-btn.delete {
+            background-color: #ff4d4d;
+            color: white;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--secondary);
+            padding: 2rem 0;
+            text-align: center;
+            margin-top: 2rem;
+        }
+        
+        /* Routine Container */
+        .routine-container {
+            background-color: var(--secondary);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-top: 2rem;
+            display: none;
+        }
+        
+        .day-tabs {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+        }
+        
+        .day-tab {
+            padding: 0.5rem 1rem;
+            cursor: pointer;
+            background-color: var(--dark);
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .day-tab:hover {
+            background-color: #333;
+        }
+        
+        .day-tab.active {
+            background-color: var(--primary);
+            color: var(--dark);
+        }
+        
+        .day-content {
+            display: none;
+            margin-top: 1rem;
+        }
+        
+        .day-content.active {
+            display: block;
+        }
+        
+        .exercise {
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid #444;
+        }
+        
+        .exercise h4 {
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+        
+        /* Error and Status Messages */
+        .expired-message {
+            background-color: #ff4d4d;
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .success-message {
+            background-color: var(--primary);
+            color: var(--dark);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            text-align: center;
+            display: none;
+        }
+        
+        .error-message {
+            color: var(--error);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+        
+        /* Loading Indicator */
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255,255,255,.3);
+            border-radius: 50%;
+            border-top-color: var(--primary);
+            animation: spin 1s ease-in-out infinite;
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .info-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+            
+            .modal-content {
+                width: 95%;
+                margin: 20% auto;
+            }
+            
+            .admin-tabs {
+                flex-wrap: wrap;
+            }
+            
+            .tab-btn {
+                flex: 1 0 auto;
+                text-align: center;
+            }
+        }
+        
+        /* View System */
+        .view {
+            display: none;
+        }
+        
+        .view.active {
+            display: block;
+        }
+
+        /* Estilos para la edición de ejercicios */
+        .exercise-edit {
+            margin-bottom: 1.5rem;
+            padding: 1rem;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 4px;
+        }
+
+        .exercise-edit .form-group {
+            margin-bottom: 0.75rem;
+        }
+
+        .exercise-edit input {
+            width: 100%;
+            padding: 0.5rem;
+            background-color: #333;
+            color: var(--light);
+            border: 1px solid #444;
+            border-radius: 4px;
+        }
+
+        /* Mejoras visuales para el modal de rutinas */
+        #editRoutineModal .modal-content {
+            max-width: 800px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        #editRoutineModal .tab-content {
+            padding: 1rem;
+            background-color: rgba(0,0,0,0.1);
+            border-radius: 4px;
+            margin-top: 1rem;
+        }
+
+        #editRoutineModal .btn {
+            margin-top: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container logo-container">
+            <div class="logo">
+                <img src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-gHFZZjK3JyPLtZynJZ6M429ZJIfgVs.png" alt="Logo Full Center Gym" style="height: 50px; width: auto;"> 
+                FULL<span>CENTER</span> GYM
+            </div>
+            <a href="#" class="admin-link" id="adminLink">Administración</a>
+        </div>
+    </header>
+    
+    <main class="container">
+        <!-- Client View -->
+        <div class="view active" id="clientView">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1>FULL CENTER GYM</h1>
+                    <p>Todo gran camino comienza con un pequeño paso</p>
+                    <button class="btn" id="verHorariosBtn">Ver Horarios</button>
+                </div>
+            </section>
+            
+            <!-- Client Login Section -->
+            <section class="client-login">
+                <h2>Accede a tu rutina</h2>
+                <p>Ingresa tu DNI para ver tu rutina personalizada y verificar el estado de tu membresía.</p>
+                <div class="form-group">
+                    <label for="clientDni">DNI:</label>
+                    <input type="text" id="clientDni" placeholder="Ingresa tu DNI">
+                    <div class="error-message" id="dniError"></div>
+                </div>
+                <button class="btn" id="checkRoutineBtn">Ver mi rutina</button>
+                <div class="expired-message" id="expiredMessage">
+                    Tu membresía ha vencido. Por favor, acércate a recepción para renovarla y poder acceder a tu rutina personalizada.
+                </div>
+                <div class="success-message" id="successMessage"></div>
+            </section>
+            
+            <!-- Routine Display Section -->
+            <section class="routine-container" id="routineContainer">
+                <h2>Tu rutina personalizada</h2>
+                <div class="client-info" id="clientInfo">
+                    <p><strong>Cliente:</strong> <span id="clientName">Nombre del Cliente</span></p>
+                    <p><strong>Membresía válida hasta:</strong> <span id="membershipDate">01/01/2026</span></p>
+                </div>
+                
+                <div class="day-tabs" id="dayTabs">
+                    <div class="day-tab active" data-day="monday">Lunes</div>
+                    <div class="day-tab" data-day="tuesday">Martes</div>
+                    <div class="day-tab" data-day="wednesday">Miércoles</div>
+                    <div class="day-tab" data-day="thursday">Jueves</div>
+                    <div class="day-tab" data-day="friday">Viernes</div>
+                    <div class="day-tab" data-day="saturday">Sábado</div>
+                </div>
+                
+                <div class="day-content active" id="monday">
+                    <h3>Rutina de Lunes</h3>
+                    <div class="exercise">
+                        <h4>Press de banca</h4>
+                        <p>4 series x 12 repeticiones</p>
+                        <p>Descanso: 60 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Press inclinado con mancuernas</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Aperturas con cables</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                </div>
+                
+                <div class="day-content" id="tuesday">
+                    <h3>Rutina de Martes</h3>
+                    <div class="exercise">
+                        <h4>Dominadas</h4>
+                        <p>4 series x 10 repeticiones</p>
+                        <p>Descanso: 60 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Remo con barra</h4>
+                        <p>3 series x 12 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Pulldown al pecho</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                </div>
+                
+                <div class="day-content" id="wednesday">
+                    <h3>Rutina de Miércoles</h3>
+                    <div class="exercise">
+                        <h4>Press militar</h4>
+                        <p>4 series x 10 repeticiones</p>
+                        <p>Descanso: 60 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Elevaciones laterales</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Face pulls</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                </div>
+                
+                <div class="day-content" id="thursday">
+                    <h3>Rutina de Jueves</h3>
+                    <div class="exercise">
+                        <h4>Curl de bíceps con barra</h4>
+                        <p>4 series x 12 repeticiones</p>
+                        <p>Descanso: 60 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Extensiones de tríceps</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Curl martillo</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                </div>
+                
+                <div class="day-content" id="friday">
+                    <h3>Rutina de Viernes</h3>
+                    <div class="exercise">
+                        <h4>Sentadillas</h4>
+                        <p>4 series x 12 repeticiones</p>
+                        <p>Descanso: 90 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Prensa de piernas</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 60 segundos entre series</p>
+                    </div>
+                    <div class="exercise">
+                        <h4>Extensiones de cuádriceps</h4>
+                        <p>3 series x 15 repeticiones</p>
+                        <p>Descanso: 45 segundos entre series</p>
+                    </div>
+                </div>
+                
+                <div class="day-content" id="saturday">
+                    <h3>Rutina de Sábado</h3>
+                    <div class="exercise">
+                        <h4>Cardio y core</h4>
+                        <p>20 minutos de cardio (elíptica, cinta o bicicleta)</p>
+                        <p>3 series de 20 abdominales</p>
+                        <p>3 series de 30 segundos de plancha</p>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Info Section -->
+            <section class="info-section">
+                <h2>Sobre nuestro gimnasio</h2>
+                <div class="info-cards">
+                    <div class="card">
+                        <h3>Nuestras instalaciones</h3>
+                        <p>Contamos con equipamiento de última generación, áreas especializadas para entrenamiento de fuerza, cardio, clases grupales y más.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Entrenadores profesionales</h3>
+                        <p>Nuestro equipo de entrenadores certificados te guiará en cada paso de tu entrenamiento para alcanzar tus objetivos.</p>
+                    </div>
+                    <div class="card">
+                        <h3>Membresías</h3>
+                        <p>Ofrecemos planes flexibles que se adaptan a tus necesidades, desde membresías mensuales hasta anuales con descuentos especiales.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="info-section">
+                <h2>Horarios</h2>
+                <div class="schedule-container">
+                    <table class="schedule-table">
+                        <thead>
+                            <tr>
+                                <th>LUNES</th>
+                                <th>MARTES</th>
+                                <th>MIÉRCOLES</th>
+                                <th>JUEVES</th>
+                                <th>VIERNES</th>
+                                <th>SÁBADO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>7:00-13:00</td>
+                                <td>8:00-13:00</td>
+                                <td>7:00-13:00</td>
+                                <td>8:00-13:00</td>
+                                <td>7:00-13:00</td>
+                                <td rowspan="2">HORARIO CORRIDO DE 9:00-17:00 HRS</td>
+                            </tr>
+                            <tr>
+                                <td>14:00-22:00</td>
+                                <td>14:00-22:00</td>
+                                <td>14:00-22:00</td>
+                                <td>14:00-22:00</td>
+                                <td>14:00-22:00</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <p style="margin-top: 1rem; text-align: center;">DÍAS FERIADOS SE APLICA EL HORARIO DEL DÍA SÁBADO</p>
+                </div>
+            </section>
+        </div>
+        
+        <!-- Admin Panel -->
+        <div class="view" id="adminPanel">
+            <section class="admin-panel container">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+                    <h2>Panel de Administración</h2>
+                    <button class="btn" id="logoutBtn">Cerrar sesión</button>
+                </div>
+                
+                <div class="admin-tabs">
+                    <button class="tab-btn active" data-tab="clientsTab">Clientes</button>
+                    <button class="tab-btn" data-tab="expiringTab">Membresías por vencer</button>
+                    <button class="tab-btn" data-tab="addClientTab">Agregar cliente</button>
+                </div>
+                
+                <div class="tab-content active" id="clientsTab">
+                    <h3>Lista de clientes</h3>
+                    <div class="form-group" style="margin-bottom: 1rem;">
+                        <input type="text" id="clientSearch" placeholder="Buscar cliente por DNI o nombre..." style="width: 100%;">
+                    </div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DNI</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Vencimiento</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="clientsTableBody">
+                            <!-- Datos se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="tab-content" id="expiringTab">
+                    <h3>Membresías por vencer (próximos 7 días)</h3>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>DNI</th>
+                                <th>Nombre</th>
+                                <th>Apellido</th>
+                                <th>Vencimiento</th>
+                                <th>Días restantes</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="expiringTableBody">
+                            <!-- Datos se cargarán dinámicamente -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="tab-content" id="addClientTab">
+                    <h3>Agregar nuevo cliente</h3>
+                    <div class="form-group">
+                        <label for="newClientDni">DNI:</label>
+                        <input type="text" id="newClientDni" placeholder="Ingresa el DNI">
+                        <div class="error-message" id="newDniError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newClientName">Nombre:</label>
+                        <input type="text" id="newClientName" placeholder="Ingresa el nombre">
+                        <div class="error-message" id="newNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newClientLastName">Apellido:</label>
+                        <input type="text" id="newClientLastName" placeholder="Ingresa el apellido">
+                        <div class="error-message" id="newLastNameError"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="newClientExpiry">Fecha de vencimiento:</label>
+                        <input type="date" id="newClientExpiry">
+                        <div class="error-message" id="newExpiryError"></div>
+                    </div>
+                    <button class="btn" id="saveClientBtn">Guardar cliente</button>
+                    <div class="success-message" id="clientSuccessMessage"></div>
+                </div>
+            </section>
+        </div>
+    </main>
+    
+    <!-- Admin Login Modal -->
+    <div class="modal" id="adminModal">
+        <div class="modal-content">
+            <span class="close" id="closeAdminModal">&times;</span>
+            <h2>Acceso Administrativo</h2>
+            <div class="form-group">
+                <label for="adminPassword">Contraseña:</label>
+                <input type="password" id="adminPassword" placeholder="Ingresa la contraseña">
+                <div class="error-message" id="adminPasswordError"></div>
+            </div>
+            <button class="btn" id="adminLoginBtn">Ingresar</button>
+        </div>
+    </div>
+    
+    <!-- Edit Client Modal -->
+    <div class="modal" id="editClientModal">
+        <div class="modal-content">
+            <span class="close" id="closeEditModal">&times;</span>
+            <h2>Editar cliente</h2>
+            <div class="form-group">
+                <label for="editClientDni">DNI:</label>
+                <input type="text" id="editClientDni" readonly>
+            </div>
+            <div class="form-group">
+                <label for="editClientName">Nombre:</label>
+                <input type="text" id="editClientName">
+                <div class="error-message" id="editNameError"></div>
+            </div>
+            <div class="form-group">
+                <label for="editClientLastName">Apellido:</label>
+                <input type="text" id="editClientLastName">
+                <div class="error-message" id="editLastNameError"></div>
+            </div>
+            <div class="form-group">
+                <label for="editClientExpiry">Fecha de vencimiento:</label>
+                <input type="date" id="editClientExpiry">
+                <div class="error-message" id="editExpiryError"></div>
+            </div>
+            <button class="btn" id="updateClientBtn">Actualizar</button>
+            <div class="success-message" id="editSuccessMessage"></div>
+        </div>
+    </div>
+    
+    <!-- Edit Routine Modal -->
+    <div class="modal" id="editRoutineModal">
+        <div class="modal-content">
+            <span class="close" id="closeRoutineModal">&times;</span>
+            <h2>Editar rutina</h2>
+            <div class="client-info">
+                <p><strong>Cliente:</strong> <span id="routineClientName">Nombre del Cliente</span></p>
+                <p><strong>DNI:</strong> <span id="routineClientDni">12345678</span></p>
+            </div>
+            
+            <div class="admin-tabs" id="routineDayTabs">
+                <button class="tab-btn active" data-tab="routineMonday">Lunes</button>
+                <button class="tab-btn" data-tab="routineTuesday">Martes</button>
+                <button class="tab-btn" data-tab="routineWednesday">Miércoles</button>
+                <button class="tab-btn" data-tab="routineThursday">Jueves</button>
+                <button class="tab-btn" data-tab="routineFriday">Viernes</button>
+                <button class="tab-btn" data-tab="routineSaturday">Sábado</button>
+            </div>
+            
+            <div class="tab-content active" id="routineMonday">
+                <h3>Rutina de Lunes</h3>
+                <div id="mondayExercises">
+                    <!-- Ejercicios se cargarán dinámicamente -->
+                </div>
+                <button class="btn" id="addMondayExercise">Agregar ejercicio</button>
+            </div>
+            
+            <div class="tab-content" id="routineTuesday">
+                <h3>Rutina de Martes</h3>
+                <div id="tuesdayExercises"></div>
+                <button class="btn" id="addTuesdayExercise">Agregar ejercicio</button>
+            </div>
+            
+            <div class="tab-content" id="routineWednesday">
+                <h3>Rutina de Miércoles</h3>
+                <div id="wednesdayExercises"></div>
+                <button class="btn" id="addWednesdayExercise">Agregar ejercicio</button>
+            </div>
+            
+            <div class="tab-content" id="routineThursday">
+                <h3>Rutina de Jueves</h3>
+                <div id="thursdayExercises"></div>
+                <button class="btn" id="addThursdayExercise">Agregar ejercicio</button>
+            </div>
+            
+            <div class="tab-content" id="routineFriday">
+                <h3>Rutina de Viernes</h3>
+                <div id="fridayExercises"></div>
+                <button class="btn" id="addFridayExercise">Agregar ejercicio</button>
+            </div>
+            
+            <div class="tab-content" id="routineSaturday">
+                <h3>Rutina de Sábado</h3>
+                <div id="saturdayExercises"></div>
+                <button class="btn" id="addSaturdayExercise">Agregar ejercicio</button>
+            </div>
+            
+            <button class="btn" id="saveRoutineBtn" style="margin-top: 1rem;">Guardar rutina</button>
+            <div class="success-message" id="routineSuccessMessage"></div>
+        </div>
+    </div>
+    
+    <!-- Schedule Modal -->
+    <div class="modal" id="scheduleModal">
+        <div class="modal-content">
+            <span class="close" id="closeScheduleModal">&times;</span>
+            <h2>Horarios del gimnasio</h2>
+            <div class="schedule-container">
+                <table class="schedule-table">
+                    <thead>
+                        <tr>
+                            <th>LUNES</th>
+                            <th>MARTES</th>
+                            <th>MIÉRCOLES</th>
+                            <th>JUEVES</th>
+                            <th>VIERNES</th>
+                            <th>SÁBADO</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>7:00-13:00</td>
+                            <td>8:00-13:00</td>
+                            <td>7:00-13:00</td>
+                            <td>8:00-13:00</td>
+                            <td>7:00-13:00</td>
+                            <td rowspan="2">HORARIO CORRIDO DE 9:00-17:00 HRS</td>
+                        </tr>
+                        <tr>
+                            <td>14:00-22:00</td>
+                            <td>14:00-22:00</td>
+                            <td>14:00-22:00</td>
+                            <td>14:00-22:00</td>
+                            <td>14:00-22:00</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="margin-top: 1rem; text-align: center;">DÍAS FERIADOS SE APLICA EL HORARIO DEL DÍA SÁBADO</p>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 FULL CENTER GYM - Todos los derechos reservados</p>
+        </div>
+    </footer>
+
+    <script>
+        // Datos iniciales (simulando base de datos)
+        let gymData = {
+            adminPassword: "FullCenter2025",
+            clients: [
+                {
+                    dni: "12345678",
+                    name: "Juan",
+                    lastName: "Pérez",
+                    expiry: "2025-05-15",
+                    routine: {
+                        monday: [
+                            { exercise: "Press de banca", sets: "4x12", rest: "60 segundos" },
+                            { exercise: "Press inclinado con mancuernas", sets: "3x15", rest: "45 segundos" },
+                            { exercise: "Aperturas con cables", sets: "3x15", rest: "45 segundos" }
+                        ],
+                        tuesday: [
+                            { exercise: "Dominadas", sets: "4x10", rest: "60 segundos" },
+                            { exercise: "Remo con barra", sets: "3x12", rest: "45 segundos" },
+                            { exercise: "Pulldown al pecho", sets: "3x15", rest: "45 segundos" }
+                        ],
+                        wednesday: [
+                            { exercise: "Press militar", sets: "4x10", rest: "60 segundos" },
+                            { exercise: "Elevaciones laterales", sets: "3x15", rest: "45 segundos" },
+                            { exercise: "Face pulls", sets: "3x15", rest: "45 segundos" }
+                        ],
+                        thursday: [
+                            { exercise: "Curl de bíceps con barra", sets: "4x12", rest: "60 segundos" },
+                            { exercise: "Extensiones de tríceps", sets: "3x15", rest: "45 segundos" },
+                            { exercise: "Curl martillo", sets: "3x15", rest: "45 segundos" }
+                        ],
+                        friday: [
+                            { exercise: "Sentadillas", sets: "4x12", rest: "90 segundos" },
+                            { exercise: "Prensa de piernas", sets: "3x15", rest: "60 segundos" },
+                            { exercise: "Extensiones de cuádriceps", sets: "3x15", rest: "45 segundos" }
+                        ],
+                        saturday: [
+                            { exercise: "Cardio y core", sets: "20 min + 3x20 + 3x30s", rest: "Mínimo" }
+                        ]
+                    }
+                },
+                {
+                    dni: "87654321",
+                    name: "María",
+                    lastName: "González",
+                    expiry: "2025-04-10",
+                    routine: {
+                        monday: [
+                            { exercise: "Sentadillas", sets: "3x15", rest: "60 segundos" },
+                            { exercise: "Zancadas", sets: "3x12", rest: "45 segundos" },
+                            { exercise: "Peso muerto", sets: "3x10", rest: "60 segundos" }
+                        ],
+                        tuesday: [
+                            { exercise: "Press de banca", sets: "3x12", rest: "60 segundos" },
+                            { exercise: "Flexiones", sets: "3x15", rest: "45 segundos" },
+                            { exercise: "Fondos en paralelas", sets: "3x12", rest: "45 segundos" }
+                        ],
+                        wednesday: [
+                            { exercise: "Cardio", sets: "30 minutos", rest: "N/A" }
+                        ],
+                        thursday: [
+                            { exercise: "Dominadas asistidas", sets: "3x10", rest: "60 segundos" },
+                            { exercise: "Remo con mancuerna", sets: "3x12", rest: "45 segundos" },
+                            { exercise: "Pulldown", sets: "3x15", rest: "45 segundos" }
+                        ],
+                        friday: [
+                            { exercise: "Press militar", sets: "3x12", rest: "60 segundos" },
+                            { exercise: "Elevaciones laterales", sets: "3x15", rest: "45 segundos" },
+                            { exercise: "Curl de bíceps", sets: "3x15", rest: "45 segundos" }
+                        ],
+                        saturday: [
+                            { exercise: "Cardio y core", sets: "20 min + 3x20 + 3x30s", rest: "Mínimo" }
+                        ]
+                    }
+                },
+                {
+                    dni: "23456789",
+                    name: "Carlos",
+                    lastName: "Rodríguez",
+                    expiry: "2025-03-25",
+                    routine: {
+                        monday: [
+                            { exercise: "Press de banca", sets: "5x5", rest: "90 segundos" },
+                            { exercise: "Press inclinado", sets: "4x8", rest: "60 segundos" },
+                            { exercise: "Fondos", sets: "3x10", rest: "60 segundos" }
+                        ],
+                        tuesday: [
+                            { exercise: "Sentadillas", sets: "5x5", rest: "90 segundos" },
+                            { exercise: "Peso muerto", sets: "4x6", rest: "90 segundos" },
+                            { exercise: "Extensiones de cuádriceps", sets: "3x12", rest: "60 segundos" }
+                        ],
+                        wednesday: [
+                            { exercise: "Dominadas", sets: "5x5", rest: "90 segundos" },
+                            { exercise: "Remo con barra", sets: "4x8", rest: "60 segundos" },
+                            { exercise: "Pulldown", sets: "3x12", rest: "60 segundos" }
+                        ],
+                        thursday: [
+                            { exercise: "Press militar", sets: "5x5", rest: "90 segundos" },
+                            { exercise: "Elevaciones laterales", sets: "4x10", rest: "60 segundos" },
+                            { exercise: "Face pulls", sets: "3x15", rest: "45 segundos" }
+                        ],
+                        friday: [
+                            { exercise: "Curl de bíceps", sets: "4x10", rest: "60 segundos" },
+                            { exercise: "Extensiones de tríceps", sets: "4x10", rest: "60 segundos" },
+                            { exercise: "Curl martillo", sets: "3x12", rest: "45 segundos" }
+                        ],
+                        saturday: [
+                            { exercise: "Cardio HIIT", sets: "20 minutos", rest: "N/A" },
+                            { exercise: "Abdominales", sets: "4x15", rest: "30 segundos" }
+                        ]
+                    }
+                }
+            ]
+        };
+
+        // Guardar datos en localStorage
+        function saveData() {
+            localStorage.setItem('gymData', JSON.stringify(gymData));
+        }
+
+        // Cargar datos desde localStorage
+        function loadData() {
+            const storedData = localStorage.getItem('gymData');
+            if (storedData) {
+                gymData = JSON.parse(storedData);
+            } else {
+                saveData(); // Guardar los datos iniciales si no hay datos en localStorage
+            }
+        }
+
+        // Formatear fecha para mostrar
+        function formatDate(dateString) {
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            return new Date(dateString).toLocaleDateString('es-ES', options);
+        }
+
+        // Verificar si una membresía está vencida
+        function isMembershipExpired(expiryDate) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const expiry = new Date(expiryDate);
+            return expiry < today;
+        }
+
+        // Calcular días restantes hasta vencimiento
+        function getDaysRemaining(expiryDate) {
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const expiry = new Date(expiryDate);
+            const diffTime = expiry - today;
+            return Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+        }
+
+        // Mostrar error en un campo
+        function showError(elementId, message) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.textContent = message;
+            errorElement.style.display = 'block';
+        }
+
+        // Ocultar error en un campo
+        function hideError(elementId) {
+            const errorElement = document.getElementById(elementId);
+            errorElement.style.display = 'none';
+        }
+
+        // Mostrar mensaje de éxito
+        function showSuccess(elementId, message) {
+            const successElement = document.getElementById(elementId);
+            successElement.textContent = message;
+            successElement.style.display = 'block';
+            setTimeout(() => {
+                successElement.style.display = 'none';
+            }, 3000);
+        }
+
+        // Validar DNI
+        function validateDni(dni) {
+            return /^\d{8}$/.test(dni);
+        }
+
+        // Buscar cliente por DNI
+        function findClientByDni(dni) {
+            return gymData.clients.find(client => client.dni === dni);
+        }
+
+        // Cargar rutina del cliente
+        function loadClientRoutine(client) {
+            document.getElementById('clientName').textContent = `${client.name} ${client.lastName}`;
+            document.getElementById('membershipDate').textContent = formatDate(client.expiry);
+            
+            // Limpiar contenido actual
+            const dayContents = document.querySelectorAll('.day-content');
+            dayContents.forEach(day => {
+                const dayId = day.id;
+                day.innerHTML = `<h3>Rutina de ${getDayName(dayId)}</h3>`;
+                
+                if (client.routine && client.routine[dayId]) {
+                    client.routine[dayId].forEach(exercise => {
+                        const exerciseDiv = document.createElement('div');
+                        exerciseDiv.className = 'exercise';
+                        exerciseDiv.innerHTML = `
+                            <h4>${exercise.exercise}</h4>
+                            <p>${exercise.sets}</p>
+                            <p>Descanso: ${exercise.rest}</p>
+                        `;
+                        day.appendChild(exerciseDiv);
+                    });
+                } else {
+                    const noExerciseDiv = document.createElement('div');
+                    noExerciseDiv.className = 'exercise';
+                    noExerciseDiv.innerHTML = `
+                        <h4>No hay ejercicios programados para este día</h4>
+                    `;
+                    day.appendChild(noExerciseDiv);
+                }
+            });
+            
+            document.getElementById('routineContainer').style.display = 'block';
+        }
+
+        // Obtener nombre del día a partir del ID
+        function getDayName(dayId) {
+            const days = {
+                'monday': 'Lunes',
+                'tuesday': 'Martes',
+                'wednesday': 'Miércoles',
+                'thursday': 'Jueves',
+                'friday': 'Viernes',
+                'saturday': 'Sábado'
+            };
+            return days[dayId] || dayId;
+        }
+
+        // Cargar clientes en la tabla de administración
+        function loadClientsTable(filter = '') {
+            const tableBody = document.getElementById('clientsTableBody');
+            tableBody.innerHTML = '';
+            
+            const filteredClients = gymData.clients.filter(client => {
+                const searchText = filter.toLowerCase();
+                return client.dni.includes(searchText) || 
+                       client.name.toLowerCase().includes(searchText) || 
+                       client.lastName.toLowerCase().includes(searchText);
+            });
+            
+            filteredClients.forEach(client => {
+                const row = document.createElement('tr');
+                const expired = isMembershipExpired(client.expiry);
+                
+                row.innerHTML = `
+                    <td>${client.dni}</td>
+                    <td>${client.name}</td>
+                    <td>${client.lastName}</td>
+                    <td style="${expired ? 'color: var(--error);' : ''}">${formatDate(client.expiry)}</td>
+                    <td>
+                        <button class="action-btn edit-client" data-dni="${client.dni}">Editar</button>
+                        <button class="action-btn edit-routine" data-dni="${client.dni}">Rutina</button>
+                        <button class="action-btn delete delete-client" data-dni="${client.dni}">Eliminar</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Agregar event listeners a los botones
+            document.querySelectorAll('.edit-client').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const dni = this.getAttribute('data-dni');
+                    openEditClientModal(dni);
+                });
+            });
+            
+            document.querySelectorAll('.edit-routine').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const dni = this.getAttribute('data-dni');
+                    openEditRoutineModal(dni);
+                });
+            });
+            
+            document.querySelectorAll('.delete-client').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const dni = this.getAttribute('data-dni');
+                    if (confirm('¿Estás seguro de que deseas eliminar este cliente?')) {
+                        deleteClient(dni);
+                    }
+                });
+            });
+        }
+
+        // Cargar clientes con membresías por vencer
+        function loadExpiringMemberships() {
+            const tableBody = document.getElementById('expiringTableBody');
+            tableBody.innerHTML = '';
+            
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            const sevenDaysLater = new Date(today);
+            sevenDaysLater.setDate(today.getDate() + 7);
+            
+            const expiringClients = gymData.clients.filter(client => {
+                const expiry = new Date(client.expiry);
+                return expiry >= today && expiry <= sevenDaysLater;
+            });
+            
+            expiringClients.sort((a, b) => new Date(a.expiry) - new Date(b.expiry));
+            
+            expiringClients.forEach(client => {
+                const daysRemaining = getDaysRemaining(client.expiry);
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td>${client.dni}</td>
+                    <td>${client.name}</td>
+                    <td>${client.lastName}</td>
+                    <td>${formatDate(client.expiry)}</td>
+                    <td>${daysRemaining}</td>
+                    <td>
+                        <button class="action-btn renew-client" data-dni="${client.dni}">Renovar</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+            
+            // Agregar event listeners a los botones de renovación
+            document.querySelectorAll('.renew-client').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const dni = this.getAttribute('data-dni');
+                    openEditClientModal(dni, true);
+                });
+            });
+        }
+
+        // Abrir modal para editar cliente
+        function openEditClientModal(dni, focusOnExpiry = false) {
+            const client = findClientByDni(dni);
+            if (!client) return;
+            
+            document.getElementById('editClientDni').value = client.dni;
+            document.getElementById('editClientName').value = client.name;
+            document.getElementById('editClientLastName').value = client.lastName;
+            document.getElementById('editClientExpiry').value = client.expiry;
+            
+            document.getElementById('editClientModal').style.display = 'block';
+            
+            if (focusOnExpiry) {
+                document.getElementById('editClientExpiry').focus();
+            }
+        }
+
+        // Abrir modal para editar rutina
+        function openEditRoutineModal(dni) {
+            const client = findClientByDni(dni);
+            if (!client) return;
+            
+            document.getElementById('routineClientName').textContent = `${client.name} ${client.lastName}`;
+            document.getElementById('routineClientDni').textContent = client.dni;
+            
+            // Cargar ejercicios para cada día
+            loadExercisesForDay('monday', client);
+            loadExercisesForDay('tuesday', client);
+            loadExercisesForDay('wednesday', client);
+            loadExercisesForDay('thursday', client);
+            loadExercisesForDay('friday', client);
+            loadExercisesForDay('saturday', client);
+            
+            document.getElementById('editRoutineModal').style.display = 'block';
+        }
+
+        // Cargar ejercicios para un día específico
+        function loadExercisesForDay(day, client) {
+            const container = document.getElementById(`${day}Exercises`);
+            container.innerHTML = '';
+            
+            if (client.routine && client.routine[day]) {
+                client.routine[day].forEach((exercise, index) => {
+                    const exerciseDiv = document.createElement('div');
+                    exerciseDiv.className = 'exercise-edit';
+                    exerciseDiv.innerHTML = `
+                        <div class="form-group">
+                            <label>Ejercicio:</label>
+                            <input type="text" class="exercise-name" value="${exercise.exercise}">
+                        </div>
+                        <div class="form-group">
+                            <label>Series x Repeticiones:</label>
+                            <input type="text" class="exercise-sets" value="${exercise.sets}">
+                        </div>
+                        <div class="form-group">
+                            <label>Descanso:</label>
+                            <input type="text" class="exercise-rest" value="${exercise.rest}">
+                        </div>
+                        <button class="action-btn delete remove-exercise" data-day="${day}" data-index="${index}">Eliminar</button>
+                    `;
+                    container.appendChild(exerciseDiv);
+                });
+            }
+            
+            // Agregar event listeners a los botones de eliminar ejercicio
+            container.querySelectorAll('.remove-exercise').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    this.closest('.exercise-edit').remove();
+                });
+            });
+        }
+
+        // Agregar nuevo ejercicio a un día
+        function addExerciseToDay(day) {
+            const container = document.getElementById(`${day}Exercises`);
+            const exerciseDiv = document.createElement('div');
+            exerciseDiv.className = 'exercise-edit';
+            exerciseDiv.innerHTML = `
+                <div class="form-group">
+                    <label>Ejercicio:</label>
+                    <input type="text" class="exercise-name" value="">
+                </div>
+                <div class="form-group">
+                    <label>Series x Repeticiones:</label>
+                    <input type="text" class="exercise-sets" value="">
+                </div>
+                <div class="form-group">
+                    <label>Descanso:</label>
+                    <input type="text" class="exercise-rest" value="">
+                </div>
+                <button class="action-btn delete remove-exercise">Eliminar</button>
+            `;
+            container.appendChild(exerciseDiv);
+            
+            // Agregar event listener al botón de eliminar
+            exerciseDiv.querySelector('.remove-exercise').addEventListener('click', function() {
+                exerciseDiv.remove();
+            });
+        }
+
+        // Guardar rutina editada
+        function saveRoutine() {
+            const dni = document.getElementById('routineClientDni').textContent;
+            const client = findClientByDni(dni);
+            if (!client) return;
+            
+            const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+            const newRoutine = {};
+            
+            days.forEach(day => {
+                const exercises = [];
+                const exerciseElements = document.getElementById(`${day}Exercises`).querySelectorAll('.exercise-edit');
+                
+                exerciseElements.forEach(element => {
+                    const exerciseName = element.querySelector('.exercise-name').value.trim();
+                    const exerciseSets = element.querySelector('.exercise-sets').value.trim();
+                    const exerciseRest = element.querySelector('.exercise-rest').value.trim();
+                    
+                    if (exerciseName && exerciseSets) {
+                        exercises.push({
+                            exercise: exerciseName,
+                            sets: exerciseSets,
+                            rest: exerciseRest || 'N/A'
+                        });
+                    }
+                });
+                
+                newRoutine[day] = exercises;
+            });
+            
+            client.routine = newRoutine;
+            saveData();
+            
+            showSuccess('routineSuccessMessage', 'Rutina actualizada correctamente');
+            setTimeout(() => {
+                document.getElementById('editRoutineModal').style.display = 'none';
+            }, 2000);
+        }
+
+        // Eliminar cliente
+        function deleteClient(dni) {
+            const index = gymData.clients.findIndex(client => client.dni === dni);
+            if (index !== -1) {
+                gymData.clients.splice(index, 1);
+                saveData();
+                loadClientsTable();
+                loadExpiringMemberships();
+            }
+        }
+
+        // Cambiar entre pestañas
+        function switchTab(tabId) {
+            // Ocultar todas las pestañas
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Desactivar todos los botones de pestañas
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar la pestaña seleccionada
+            document.getElementById(tabId).classList.add('active');
+            
+            // Activar el botón correspondiente
+            document.querySelector(`.tab-btn[data-tab="${tabId}"]`).classList.add('active');
+        }
+
+        // Cambiar entre días de rutina
+        function switchDay(dayId) {
+            // Ocultar todos los días
+            document.querySelectorAll('.day-content').forEach(day => {
+                day.classList.remove('active');
+            });
+            
+            // Desactivar todos los botones de días
+            document.querySelectorAll('.day-tab').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Mostrar el día seleccionado
+            document.getElementById(dayId).classList.add('active');
+            
+            // Activar el botón correspondiente
+            document.querySelector(`.day-tab[data-day="${dayId}"]`).classList.add('active');
+        }
+
+        // Cambiar entre vistas
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            document.getElementById(viewId).classList.add('active');
+            
+            if (viewId === 'adminPanel') {
+                loadClientsTable();
+                loadExpiringMemberships();
+            }
+        }
+
+        // Event Listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar datos
+            loadData();
+            
+            // Admin Link
+            document.getElementById('adminLink').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.getElementById('adminModal').style.display = 'block';
+                document.getElementById('adminPassword').value = '';
+                document.getElementById('adminPassword').focus();
+            });
+            
+            // Cerrar modales
+            document.getElementById('closeAdminModal').addEventListener('click', function() {
+                document.getElementById('adminModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeEditModal').addEventListener('click', function() {
+                document.getElementById('editClientModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeRoutineModal').addEventListener('click', function() {
+                document.getElementById('editRoutineModal').style.display = 'none';
+            });
+            
+            document.getElementById('closeScheduleModal').addEventListener('click', function() {
+                document.getElementById('scheduleModal').style.display = 'none';
+            });
+            
+            // Cerrar modales al hacer clic fuera
+            window.addEventListener('click', function(e) {
+                if (e.target.classList.contains('modal')) {
+                    e.target.style.display = 'none';
+                }
+            });
+            
+            // Ver horarios
+            document.getElementById('verHorariosBtn').addEventListener('click', function() {
+                document.getElementById('scheduleModal').style.display = 'block';
+            });
+            
+            // Login de administrador
+            document.getElementById('adminLoginBtn').addEventListener('click', function() {
+                const password = document.getElementById('adminPassword').value;
+                
+                if (password === gymData.adminPassword) {
+                    document.getElementById('adminModal').style.display = 'none';
+                    switchView('adminPanel');
+                } else {
+                    showError('adminPasswordError', 'Contraseña incorrecta');
+                }
+            });
+            
+            // Logout de administrador
+            document.getElementById('logoutBtn').addEventListener('click', function() {
+                switchView('clientView');
+            });
+            
+            // Verificar rutina de cliente
+            document.getElementById('checkRoutineBtn').addEventListener('click', function() {
+                const dni = document.getElementById('clientDni').value.trim();
+                
+                if (!validateDni(dni)) {
+                    showError('dniError', 'Por favor, ingresa un DNI válido (8 dígitos)');
+                    return;
+                }
+                
+                hideError('dniError');
+                const client = findClientByDni(dni);
+                
+                if (!client) {
+                    showError('dniError', 'No se encontró ningún cliente con ese DNI');
+                    return;
+                }
+                
+                if (isMembershipExpired(client.expiry)) {
+                    document.getElementById('expiredMessage').style.display = 'block';
+                    document.getElementById('routineContainer').style.display = 'none';
+                } else {
+                    document.getElementById('expiredMessage').style.display = 'none';
+                    loadClientRoutine(client);
+                }
+            });
+            
+            // Cambiar entre pestañas de administración
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    switchTab(tabId);
+                });
+            });
+            
+            // Cambiar entre días de rutina
+            document.querySelectorAll('.day-tab').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const dayId = this.getAttribute('data-day');
+                    switchDay(dayId);
+                });
+            });
+            
+            // Cambiar entre días de rutina en el modal de edición
+            document.querySelectorAll('#routineDayTabs .tab-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const tabId = this.getAttribute('data-tab');
+                    
+                    // Ocultar todos los contenidos de pestañas
+                    document.querySelectorAll('#editRoutineModal .tab-content').forEach(tab => {
+                        tab.classList.remove('active');
+                    });
+                    
+                    // Desactivar todos los botones de pestañas
+                    document.querySelectorAll('#routineDayTabs .tab-btn').forEach(btn => {
+                        btn.classList.remove('active');
+                    });
+                    
+                    // Mostrar la pestaña seleccionada
+                    document.getElementById(tabId).classList.add('active');
+                    
+                    // Activar el botón correspondiente
+                    this.classList.add('active');
+                });
+            });
+            
+            // Buscar clientes
+            document.getElementById('clientSearch').addEventListener('input', function() {
+                loadClientsTable(this.value);
+            });
+            
+            // Guardar cliente nuevo
+            document.getElementById('saveClientBtn').addEventListener('click', function() {
+                const dni = document.getElementById('newClientDni').value.trim();
+                const name = document.getElementById('newClientName').value.trim();
+                const lastName = document.getElementById('newClientLastName').value.trim();
+                const expiry = document.getElementById('newClientExpiry').value;
+                
+                let isValid = true;
+                
+                if (!validateDni(dni)) {
+                    showError('newDniError', 'Por favor, ingresa un DNI válido (8 dígitos)');
+                    isValid = false;
+                } else if (findClientByDni(dni)) {
+                    showError('newDniError', 'Ya existe un cliente con ese DNI');
+                    isValid = false;
+                } else {
+                    hideError('newDniError');
+                }
+                
+                if (!name) {
+                    showError('newNameError', 'Por favor, ingresa el nombre');
+                    isValid = false;
+                } else {
+                    hideError('newNameError');
+                }
+                
+                if (!lastName) {
+                    showError('newLastNameError', 'Por favor, ingresa el apellido');
+                    isValid = false;
+                } else {
+                    hideError('newLastNameError');
+                }
+                
+                if (!expiry) {
+                    showError('newExpiryError', 'Por favor, selecciona una fecha de vencimiento');
+                    isValid = false;
+                } else {
+                    hideError('newExpiryError');
+                }
+                
+                if (isValid) {
+                    // Crear nuevo cliente
+                    const newClient = {
+                        dni,
+                        name,
+                        lastName,
+                        expiry,
+                        routine: {
+                            monday: [],
+                            tuesday: [],
+                            wednesday: [],
+                            thursday: [],
+                            friday: [],
+                            saturday: []
+                        }
+                    };
+                    
+                    gymData.clients.push(newClient);
+                    saveData();
+                    
+                    // Limpiar formulario
+                    document.getElementById('newClientDni').value = '';
+                    document.getElementById('newClientName').value = '';
+                    document.getElementById('newClientLastName').value = '';
+                    document.getElementById('newClientExpiry').value = '';
+                    
+                    showSuccess('clientSuccessMessage', 'Cliente agregado correctamente');
+                    
+                    // Actualizar tablas
+                    loadClientsTable();
+                    loadExpiringMemberships();
+                }
+            });
+            
+            // Actualizar cliente
+            document.getElementById('updateClientBtn').addEventListener('click', function() {
+                const dni = document.getElementById('editClientDni').value;
+                const name = document.getElementById('editClientName').value.trim();
+                const lastName = document.getElementById('editClientLastName').value.trim();
+                const expiry = document.getElementById('editClientExpiry').value;
+                
+                let isValid = true;
+                
+                if (!name) {
+                    showError('editNameError', 'Por favor, ingresa el nombre');
+                    isValid = false;
+                } else {
+                    hideError('editNameError');
+                }
+                
+                if (!lastName) {
+                    showError('editLastNameError', 'Por favor, ingresa el apellido');
+                    isValid = false;
+                } else {
+                    hideError('editLastNameError');
+                }
+                
+                if (!expiry) {
+                    showError('editExpiryError', 'Por favor, selecciona una fecha de vencimiento');
+                    isValid = false;
+                } else {
+                    hideError('editExpiryError');
+                }
+                
+                if (isValid) {
+                    const client = findClientByDni(dni);
+                    if (client) {
+                        client.name = name;
+                        client.lastName = lastName;
+                        client.expiry = expiry;
+                        
+                        saveData();
+                        
+                        showSuccess('editSuccessMessage', 'Cliente actualizado correctamente');
+                        
+                        // Actualizar tablas
+                        loadClientsTable();
+                        loadExpiringMemberships();
+                        
+                        setTimeout(() => {
+                            document.getElementById('editClientModal').style.display = 'none';
+                        }, 2000);
+                    }
+                }
+            });
+            
+            // Agregar ejercicio a cada día
+            document.getElementById('addMondayExercise').addEventListener('click', function() {
+                addExerciseToDay('monday');
+            });
+            
+            document.getElementById('addTuesdayExercise').addEventListener('click', function() {
+                addExerciseToDay('tuesday');
+            });
+            
+            document.getElementById('addWednesdayExercise').addEventListener('click', function() {
+                addExerciseToDay('wednesday');
+            });
+            
+            document.getElementById('addThursdayExercise').addEventListener('click', function() {
+                addExerciseToDay('thursday');
+            });
+            
+            document.getElementById('addFridayExercise').addEventListener('click', function() {
+                addExerciseToDay('friday');
+            });
+            
+            document.getElementById('addSaturdayExercise').addEventListener('click', function() {
+                addExerciseToDay('saturday');
+            });
+            
+            // Guardar rutina
+            document.getElementById('saveRoutineBtn').addEventListener('click', saveRoutine);
+        });
+    </script>
+</body>
+</html>
